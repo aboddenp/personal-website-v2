@@ -1,0 +1,55 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  font-family: var(--font-outfit);
+  line-height: var(--font-line-1);
+}
+
+html,
+body {
+  font-family: var(--font-roboto-flex);
+  color: var(--font-color);
+  line-height: var(--font-line-2);
+}
+
+.hero-title {
+  font-size: var(--font-size-6);
+}
+
+h1 {
+  font-size: var(--font-size-5);
+}
+
+h2 {
+  font-size: var(--font-size-4);
+}
+
+h3 {
+  font-size: var(--font-size-3);
+}
+
+p,
+.body-text {
+  font-size: var(--font-size-1);
+  font-weight: 400;
+}
+
+.body-small {
+  font-size: var(--font-size-0);
+}
+
+.body-tiny {
+  font-size: var(--font-size--2);
+}
+
+.button {
+  font-size: var(--font-size-1);
+  line-height: var(--font-line-3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

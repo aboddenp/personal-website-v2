@@ -1,0 +1,24 @@
+:root {
+
+  /* raw colors */
+  --color-bg: hsl(247 27 8);
+  --font-color: #F9FAFF;
+
+  /* Font size scale */
+  --font-size--2: 12px;
+  --font-size--1: 14px;
+  --font-size-0: 16px;
+  --font-size-1: 20px;
+  --font-size-2: 24px;
+  --font-size-3: 32px;
+  --font-size-4: 40px;
+  --font-size-5: 48px;
+  --font-size-6: 56px;
+  --font-line-1: 1.2;
+  --font-line-2: 1.5;
+
+  /* Layout */
+  --layout-spacing: max(8vh, 3rem);
+  --max-width: 1440px;
+
+}
