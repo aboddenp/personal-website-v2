@@ -10,7 +10,7 @@ body {
   font-family: system-ui, sans-serif;
 }
 
-body>* {
+body div:first-child>* {
   width: min(100%, var(--max-width));
   margin-left: auto;
   margin-right: auto;
