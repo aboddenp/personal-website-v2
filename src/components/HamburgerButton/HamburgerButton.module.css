@@ -1,6 +1,8 @@
 .button {
   cursor: pointer;
   background-color: transparent;
+  border: 1px solid var(--font-color);
+  padding: var(--spacing-2);
 }
 
 .button svg path {
