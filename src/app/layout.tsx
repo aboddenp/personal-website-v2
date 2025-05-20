@@ -6,7 +6,7 @@ const outfit = Outfit({
   variable: '--font-outfit',
 });
 
-const robotFlex = Roboto_Flex({
+const robotoFlex = Roboto_Flex({
   variable: '--font-roboto-flex',
 });
 
@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${outfit.variable} ${robotFlex.variable}`}>{children}</body>
+      <body className={`${outfit.variable} ${robotoFlex.variable}`}>{children}</body>
     </html>
   );
 }

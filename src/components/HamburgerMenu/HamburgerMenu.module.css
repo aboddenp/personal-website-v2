@@ -1,0 +1,28 @@
+.wrapper {
+  position: relative;
+}
+
+.nav {
+  background: var(--color-surface);
+  position: absolute;
+  right: 0;
+  top: 100%;
+  padding: var(--spacing-7);
+  border-radius: var(--border-radius-sm);
+}
+
+.nav ul {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav li {
+  list-style: none;
+}
+
+.nav a {
+  text-align: center;
+}

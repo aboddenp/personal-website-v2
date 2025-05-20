@@ -16,6 +16,10 @@ body {
   line-height: var(--font-line-2);
 }
 
+body {
+  font-size: var(--font-size-1);
+}
+
 .hero-title {
   font-size: var(--font-size-6);
 }
@@ -52,4 +56,20 @@ p,
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+
+a {
+  color: var(--font-color);
+  text-decoration: none;
+  background-image: linear-gradient(var(--color-accent-3), var(--color-accent-3));
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  padding-bottom: 5px;
+  transition: background 300ms ease-in-out;
+}
+
+a:hover {
+  background-size: 100% 2px;
 }

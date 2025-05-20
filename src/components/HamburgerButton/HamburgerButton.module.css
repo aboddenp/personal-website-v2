@@ -1,0 +1,8 @@
+.button {
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.button svg path {
+  stroke: var(--font-color);
+}
