@@ -1,0 +1,9 @@
+.layout-2col {
+  --horizontal-gap: var(--spacing-10);
+  --vertical-gap: var(--spacing-5);
+  place-items: center;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+  gap: var(--horizontal-gap) var(--vertical-gap);
+}

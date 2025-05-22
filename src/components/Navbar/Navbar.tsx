@@ -2,6 +2,7 @@ import Image from 'next/image';
 import * as React from 'react';
 import styles from './Navbar.module.css';
 import HamburgerMenu from '../HamburgerMenu';
+import NavbarClient from './NavbarClient';
 
 export type Link = { label: string; link: string };
 
@@ -9,7 +10,7 @@ function Navbar() {
   const links: Link[] = [
     {
       label: 'About',
-      link: '#',
+      link: '#about',
     },
     {
       label: 'Projects',
@@ -26,8 +27,7 @@ function Navbar() {
   ];
 
   return (
-    <header className={styles.wrapper}>
-      <div className={styles.backdrop}></div>
+    <NavbarClient>
       <div className={styles['navbar-wrapper']}>
         <div className={`max-content ${styles.navbar}`}>
           <Image width="73" height="80" src="/Images/Asters_logo_light.svg" alt={"Aster's Logo"} />
@@ -43,7 +43,7 @@ function Navbar() {
           </nav>
         </div>
       </div>
-    </header>
+    </NavbarClient>
   );
 }
 

@@ -1,12 +1,14 @@
 :root {
 
   --color-red: #FF39A9;
-
+  --color-purple: hsl(267 80 75);
   /* raw colors */
   --color-bg: hsl(247 27 8);
   --color-surface: #161927;
-  --font-color: #F9FAFF;
+  --color-accent: var(--color-purple);
   --color-accent-3: var(--color-red);
+
+  --font-color: #F9FAFF;
 
   /* Font size scale */
   --font-size--2: 0.75rem;
@@ -59,4 +61,7 @@
 
 
   --border-radius-sm: 12px;
+
+  /* navbar height */
+  --nav-height: 150px;
 }

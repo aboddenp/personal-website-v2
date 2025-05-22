@@ -1,0 +1,14 @@
+.wrapper {
+  min-height: min(1440px, 90vh);
+  display: grid;
+  place-items: center;
+  gap: var(--spacing-8);
+  padding-top: 112px;
+}
+
+.wrapper h1 {
+  max-width: 26ch;
+  text-align: center;
+  text-wrap: revert;
+  font-size: clamp(32px, 4vw + 1rem, 48px);
+}

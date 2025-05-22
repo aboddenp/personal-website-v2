@@ -30,6 +30,8 @@ h1 {
 
 h2 {
   font-size: var(--font-size-4);
+  color: var(--color-accent);
+  margin-bottom: 1.2rem;
 }
 
 h3 {
@@ -72,4 +74,20 @@ a {
 
 a:hover {
   background-size: 100% 2px;
+}
+
+::selection {
+  background: hsl(267 80 75 / 40%);
+}
+
+@media screen and (max-width: 450px) {
+
+  h1 {
+    font-size: var(--font-size-3);
+
+  }
+
+  body {
+    font-size: var(--font-size-0);
+  }
 }

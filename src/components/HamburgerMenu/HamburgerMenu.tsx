@@ -15,7 +15,12 @@ function HamburgerMenu({ links, className }: { links: Link[]; className?: string
     <div className={`${styles.wrapper} ${className ? className : ''}`}>
       <HamburgerButton onClick={handleClick} isOpen={showMenu} />
       {showMenu && (
-        <nav className={styles.nav}>
+        <nav
+          onClick={() => {
+            setTimeout(handleClick, 300);
+          }}
+          className={styles.nav}
+        >
           <ul>
             {links.map(({ label, link }: Link) => (
               <li key={label + link}>
