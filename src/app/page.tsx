@@ -1,10 +1,12 @@
+import ContactForm from '@/components/ContactForm';
 import Navbar from '@/components/Navbar';
 import About from '@/components/Sections/AboutMe';
 import Hero from '@/components/Sections/Hero';
 import Projects from '@/components/Sections/Projects';
-import RandomSection from '@/components/Sections/RandomSection';
+import TechStackSection from '@/components/Sections/TechStack';
+import TestimonialSection from '@/components/Sections/Testimonials';
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className="page-wrapper">
       <Navbar />
@@ -13,7 +15,9 @@ export default function Home() {
           <Hero />
           <About />
           <Projects />
-          <RandomSection />
+          <TestimonialSection />
+          <TechStackSection />
+          <ContactForm />
         </main>
         <footer></footer>
       </div>

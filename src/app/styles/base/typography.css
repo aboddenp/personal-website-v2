@@ -32,6 +32,11 @@ h2 {
   font-size: var(--font-size-4);
   color: var(--color-accent);
   margin-bottom: 1.2rem;
+  text-transform: uppercase;
+}
+
+section>h2 {
+  margin-bottom: var(--spacing-10);
 }
 
 h3 {
@@ -90,4 +95,9 @@ a:hover {
   body {
     font-size: var(--font-size-0);
   }
+}
+
+
+:is(h1, h2, h3, h4, h5, h6, p, span, div).centeredText {
+  text-align: center;
 }

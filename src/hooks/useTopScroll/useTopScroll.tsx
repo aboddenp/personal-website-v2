@@ -5,6 +5,9 @@ function useTopScroll(): boolean {
   const [isTop, setIsTop] = React.useState(true);
 
   React.useEffect(() => {
+    if (window.scrollY !== 0) {
+      setIsTop(false);
+    }
     function handleScroll() {
       if (window.scrollY == 0) {
         setIsTop(true);

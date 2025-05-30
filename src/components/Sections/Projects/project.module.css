@@ -1,0 +1,19 @@
+.sectionHeading {
+  margin-bottom: var(--spacing-10);
+}
+
+.grid {
+  --horizontal-gap: var(--spacing-5);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-10) var(--horizontal-gap);
+}
+
+.grid>* {
+
+  --content-width: calc(var(--content-width) - (var(--horizontal-gap) * 3));
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: calc(var(--content-width)/ 3);
+}

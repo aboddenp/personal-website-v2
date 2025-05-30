@@ -5,5 +5,5 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
-  gap: var(--horizontal-gap) var(--vertical-gap);
+  gap: var(--vertical-gap) var(--horizontal-gap);
 }

@@ -2,5 +2,6 @@
 @import './styles/base/root.css';
 @import './styles/base/base.css';
 @import './styles/base/typography.css';
+@import './styles/base/button.css';
 @import './styles/base/forms.css';
 @import './styles/base/utility.css';

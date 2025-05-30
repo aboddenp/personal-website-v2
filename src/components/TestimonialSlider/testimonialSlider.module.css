@@ -1,0 +1,56 @@
+.customCursor {
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--font-color);
+  display: grid;
+  place-items: center;
+  background: transparent;
+  backdrop-filter: blur(50px);
+  border-radius: 100%;
+  cursor: none;
+
+  svg path {
+    stroke: var(--font-color);
+  }
+
+
+}
+
+.testimonialWrapper {
+  container-type: inline-size;
+  container-name: embla-container;
+}
+
+.embla {
+  --slide-size: calc(100%/2);
+}
+
+.emblaViewPort {
+  overflow: hidden;
+}
+
+.emblaContainer {
+  display: flex;
+  width: 100%;
+  margin-left: calc(var(--spacing-5) * -1);
+  backface-visibility: hidden;
+}
+
+.emblaSlide {
+  flex: 0 0 var(--slide-size);
+  display: flex;
+  min-width: 0;
+  padding-left: var(--spacing-5);
+  will-change: transform;
+}
+
+@container embla-container (max-width: 70ch) {
+  .emblaSlide {
+    flex: 0 0 100%;
+    min-width: 0;
+    margin-left: var(--spacing-3);
+    margin-right: var(--spacing-3);
+  }
+}

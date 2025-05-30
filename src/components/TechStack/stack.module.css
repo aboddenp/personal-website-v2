@@ -1,0 +1,30 @@
+.stackWrapper {
+  isolation: isolate;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.stack {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.stack>div {
+  --border-color: yellow;
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-7) var(--spacing-9);
+  background: var(--color-bg);
+  border-radius: 3px;
+}
+
+.stack img {
+  max-width: none;
+}
+
+@media screen and (max-width: 450px) {
+  .stack {
+    width: fit-content !important;
+  }
+
+
+}

@@ -1,6 +1,7 @@
 html {
   scroll-behavior: smooth;
   background-color: var(--color-bg);
+  direction: ltr;
 }
 
 body {
@@ -11,6 +12,7 @@ body {
 }
 
 body * {
+
   scroll-margin-top: var(--nav-height);
 }
 
@@ -46,7 +48,7 @@ footer p {
 
 
 article *+* {
-  margin-top: 1em;
+  margin-top: 0.5em;
 }
 
 a {

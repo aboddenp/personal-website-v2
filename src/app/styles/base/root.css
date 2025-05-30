@@ -2,13 +2,18 @@
 
   --color-red: #FF39A9;
   --color-purple: hsl(267 80 75);
+  --color-yellow: hsl(50 100 50 / 81);
   /* raw colors */
   --color-bg: hsl(247 27 8);
+  --color-primary: #80CBC4;
   --color-surface: #161927;
+  --color-surface-2: #222531;
   --color-accent: var(--color-purple);
+  --color-accent-2: var(--color-yellow);
   --color-accent-3: var(--color-red);
 
   --font-color: #F9FAFF;
+  --button-text-color: #0C0C0C;
 
   /* Font size scale */
   --font-size--2: 0.75rem;
@@ -58,10 +63,18 @@
   /* 36px */
   --spacing-10: 2.5rem;
   /* 40px */
+  --spacing-11: 2.75rem;
+  --spacing-12: 3rem;
 
 
+  --border-radius-xs: 8px;
   --border-radius-sm: 12px;
+
+  --card-border-radius: var(--border-radius-xs);
 
   /* navbar height */
   --nav-height: 150px;
+
+  /* form */
+  --form-bg-color: var(--color-surface-2);
 }
