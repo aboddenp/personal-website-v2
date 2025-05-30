@@ -1,6 +1,6 @@
-import ContactForm from '@/components/ContactForm';
 import Navbar from '@/components/Navbar';
 import About from '@/components/Sections/AboutMe';
+import Footer from '@/components/Sections/Footer';
 import Hero from '@/components/Sections/Hero';
 import Projects from '@/components/Sections/Projects';
 import TechStackSection from '@/components/Sections/TechStack';
@@ -17,9 +17,8 @@ export default async function Home() {
           <Projects />
           <TestimonialSection />
           <TechStackSection />
-          <ContactForm />
         </main>
-        <footer></footer>
+        <Footer />
       </div>
     </div>
   );
