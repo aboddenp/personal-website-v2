@@ -13,8 +13,8 @@ export async function POST(request: Request) {
   });
 
   const info = await transporter.sendMail({
-    from: '"Your Personal Website" <asterb96@gmail.com>',
-    to: 'asterb@me.com',
+    from: '"Personal Website" <asterb96@gmail.com>',
+    to: 'contact@asterb.dev',
     subject: `${data.firstName} ${data.lastName} New Contact Form Filled✔`,
     text: `${data.message}`, // plain‑text body
     html: `<p>email: ${data.email} <p>${data.message}</p>`, // HTML body
