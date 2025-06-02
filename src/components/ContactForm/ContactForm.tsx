@@ -1,11 +1,28 @@
 'use client';
+import ReCaptcha from 'react-google-recaptcha';
 import * as React from 'react';
 
+const recapcha_key = process.env.NEXT_PUBLIC_RECAPCHA_KEY || '';
+
 function ContactForm() {
+  const recaptcha = React.useRef<any | null>(null);
+  const formRef = React.useRef<HTMLFormElement | null>(null);
   const id = React.useId();
   const [status, setStatus] = React.useState<string>('idle');
+  const [showCaptcha, setShowCaptcha] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>('something went wrong, try again later');
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const recaptchaValue = recaptcha?.current?.getValue();
+    if (!recaptchaValue) {
+      setStatus('error');
+      setErrorMessage('Please verify the recaptcha');
+      window.setTimeout(() => {
+        setStatus('idle');
+      }, 3000);
+      return;
+    }
     const formData = new FormData(e.target as HTMLFormElement);
     const data = Object.fromEntries(formData.entries());
     try {
@@ -28,7 +45,13 @@ function ContactForm() {
 
   return (
     <div id={'contact'} className="form-container">
-      <form onSubmit={handleSubmit}>
+      <form
+        onChange={() => {
+          setShowCaptcha(formRef.current?.checkValidity() || false);
+        }}
+        ref={formRef}
+        onSubmit={handleSubmit}
+      >
         <div className="form-2col">
           <div className="form-input">
             <label htmlFor={`first-name-${id}`}>First Name</label>
@@ -72,7 +95,7 @@ function ContactForm() {
             style={{ resize: 'none', minHeight: 117 }}
             name="message"
             placeholder="Your message here..."
-            minLength={10}
+            minLength={2}
             maxLength={500}
             required
             id={`email-${id}`}
@@ -86,9 +109,10 @@ function ContactForm() {
           ) : status == 'success' ? (
             'Sent !'
           ) : (
-            'Something went wrong try again later'
+            errorMessage
           )}
         </button>
+        <ReCaptcha style={{ display: showCaptcha ? 'block' : 'none' }} ref={recaptcha} sitekey={recapcha_key} />
       </form>
     </div>
   );

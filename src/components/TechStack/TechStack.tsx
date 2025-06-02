@@ -6,6 +6,7 @@ import styles from './stack.module.css';
 
 function TechStack() {
   const [hovered, setHovered] = React.useState<number | null>(null);
+  const [hoveredWrapper, setHoveredWrapper] = React.useState<boolean>(false);
 
   const stacks = [
     { img: '/Images/stack/javascript.png', color: 'yellow', name: 'javascript' },
@@ -32,24 +33,38 @@ function TechStack() {
   }
 
   return (
-    <div className={styles.stackWrapper}>
+    <motion.div
+      onMouseOver={() => setHoveredWrapper(true)}
+      onMouseLeave={() => setHoveredWrapper(false)}
+      layout="position"
+      style={{
+        display: 'grid',
+        gridTemplateColumns: hoveredWrapper ? 'repeat(3, 1fr)' : '1fr',
+        gap: '1rem',
+      }}
+      className={styles.stackWrapper}
+    >
       {stacks.map((stack, index) => (
         <motion.div
-          initial={false}
-          animate={{
-            width: index === hovered ? '175px' : calculateWidth(index),
-          }}
           key={index}
-          className={styles.stack}
+          className={`${styles.stack}`}
+          layout
           onMouseOver={() => setHovered(index)}
           onMouseLeave={() => setHovered(null)}
+          style={{
+            gridColumn: hoveredWrapper ? 'auto' : '1',
+            gridRow: hoveredWrapper ? 'auto' : '1',
+          }}
+          initial={{ x: -40 }}
+          whileInView={{ x: 20 * index }}
+          animate={hoveredWrapper ? { x: 0, rotateX: 0, rotateY: 0, rotateZ: 0 } : { rotateX: 20, rotateY: 20 }}
         >
           <div>
             <Image src={stack.img} width="100" height="100" alt={stack.name} />
           </div>
         </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
 
