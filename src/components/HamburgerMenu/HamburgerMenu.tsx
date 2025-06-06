@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import { Link } from '@/components/Navbar';
+import { Link } from '@/components/Navbar/data/main_menu';
 import HamburgerButton from '@/components/HamburgerButton';
 import styles from './HamburgerMenu.module.css';
 

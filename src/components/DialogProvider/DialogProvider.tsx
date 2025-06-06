@@ -13,7 +13,7 @@ type DialogContextType = {
 const DialogProviderContext = createContext<DialogContextType | undefined>(undefined);
 
 // DialogProvider component
-export function DialogProvider({ children }: { children: ReactNode }) {
+function DialogProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const openDialog = () => setIsOpen(true);
@@ -32,3 +32,5 @@ export function useDialog() {
   if (!context) throw new Error('useDialog must be used within a DialogProvider');
   return context;
 }
+
+export default DialogProvider;
