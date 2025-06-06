@@ -1,14 +1,15 @@
-import { ExternalLink, GraduationCap } from 'lucide-react';
+import { BookOpenText, ExternalLink, GraduationCap } from 'lucide-react';
 import Image from 'next/image';
 import styles from './projectCard.module.css';
 import * as React from 'react';
+import { RichText } from '@/types';
 
-type ProjectCardProps = {
+export type ProjectCardProps = {
   img_src: string;
   title: string;
-  description: string;
+  description: RichText;
   external_link?: string;
-  internal_link?: string;
+  internal_link?: () => void;
 };
 
 function ProjectCard({ img_src, title, description, external_link, internal_link }: ProjectCardProps) {
@@ -25,14 +26,14 @@ function ProjectCard({ img_src, title, description, external_link, internal_link
           </div>
           <div className={styles.icons}>
             {external_link && (
-              <a href={external_link}>
+              <a target="_blank" href={external_link}>
                 <ExternalLink width={18} height={18} />
               </a>
             )}
             {internal_link && (
-              <a href={internal_link}>
-                <GraduationCap width={18} height={18} />
-              </a>
+              <button onClick={() => internal_link()}>
+                <BookOpenText width={18} height={18} />
+              </button>
             )}
           </div>
         </div>

@@ -1,0 +1,93 @@
+.title {
+  padding-right: 50px;
+}
+
+.overlay {
+  position: fixed;
+  background-color: hsl(0 0 0 / 90%);
+  padding-top: var(--nav-height) 2rem;
+  inset: 0;
+  z-index: 1500;
+}
+
+.close {
+  cursor: pointer;
+  position: absolute;
+  right: var(--spacing-8);
+  top: var(--spacing-5);
+  background-color: transparent;
+  border: 1px solid var(--font-color);
+  padding: var(--spacing-3);
+
+  svg path {
+    stroke: var(--font-color);
+  }
+}
+
+.contentWrapper {
+  display: grid;
+  place-items: center;
+  z-index: 15001;
+  position: fixed;
+  inset: 0;
+}
+
+.dialogContent {
+  max-width: min(calc(100% - var(--spacing-10)), var(--max-width));
+  max-height: 90vh;
+  height: auto;
+}
+
+.content {
+  background-color: var(--color-surface);
+  padding: 60px var(--spacing-10);
+  padding-left: var(--spacing-10);
+  padding-right: var(--spacing-2);
+  position: relative;
+  border-radius: var(--border-radius-sm);
+}
+
+
+.contentScroll {
+  max-height: calc(60vh);
+  padding-right: 80px;
+  overflow: auto;
+  scrollbar-color: #999 transparent;
+}
+
+/* For WebKit browsers (Chrome, Safari) */
+.contentScroll::-webkit-scrollbar {
+  width: 8px;
+  /* Hide scrollbar */
+  height: 8px;
+}
+
+.contentScroll:hover::-webkit-scrollbar {
+  width: 8px;
+  /* Show scrollbar on hover */
+  height: 8px;
+}
+
+.contentScroll:hover::-webkit-scrollbar-thumb {
+  background: #999;
+  border-radius: 4px;
+}
+
+@media screen and (max-width: 480px) {
+
+
+  .close {
+    top: -60px;
+    right: 0;
+  }
+
+  .content {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .contentScroll {
+    padding-right: var(--spacing-1);
+  }
+
+}

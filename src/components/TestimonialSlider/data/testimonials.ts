@@ -33,11 +33,11 @@ const Testimonials: TestimonialType[] = [
   },
   {
     id: crypto.randomUUID(),
-    avatar_src: '/Images/juan_diego_avatar.jpeg',
-    name: 'Juan Diego Bottarini',
-    position: 'Web Development @ Kalungi',
+    avatar_src: '/Images/anon-user-grey.png',
+    name: 'Internal Reviewer',
+    position: 'CMS Platform Review Team',
     content:
-      'I\u2019ve had the pleasure of working with Aster for two years, and from day one, I was impressed by his technical ability, clean and scalable code, and attention to detail when building software products. He\u2019s one of the most technical developers I\u2019ve ever met. His organizational skills and politeness make him a joy to work with. I\u2019m honestly a bit envious of the teams that get to work with him next.',
+      'This is an excellent module—clearly built with thoughtfulness and attention to detail. The configuration options are intuitive, and the support for advanced features like clipping types is impressive. Implementing something like this outside of our platform can be a challenge, so seeing it integrated so seamlessly is remarkable. The fluid text sizing and mobile responsiveness really help content stand out. If I were building a site on this platform, this is a tool I’d absolutely use. It’s a great example of a well-executed solution from someone who understands both functionality and user experience.',
   },
 ];
 

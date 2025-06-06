@@ -49,12 +49,21 @@ p,
   font-weight: 400;
 }
 
+p:not(:last-child) {
+  margin-bottom: 1.5rem
+}
+
 .body-small {
   font-size: var(--font-size-0);
 }
 
 .body-tiny {
   font-size: var(--font-size--2);
+}
+
+.text-muted {
+  color: var(--font-color-muted);
+  opacity: 0.9;
 }
 
 .button {
@@ -94,6 +103,10 @@ nav a:hover {
   }
 
   body {
+    font-size: var(--font-size-0);
+  }
+
+  p {
     font-size: var(--font-size-0);
   }
 }

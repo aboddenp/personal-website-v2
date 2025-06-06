@@ -11,9 +11,8 @@
 }
 
 .grid>* {
-
-  --content-width: calc(var(--content-width) - (var(--horizontal-gap) * 3));
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: calc(var(--content-width)/ 3);
+  /* desired for 3 cols */
+  --desired-width: 1240px;
+  --box-width: calc(var(--desired-width) - (var(--horizontal-gap) * 2));
+  flex: 1 1 calc(var(--box-width) / 3);
 }

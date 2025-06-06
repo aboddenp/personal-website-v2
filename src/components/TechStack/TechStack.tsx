@@ -9,12 +9,12 @@ function TechStack() {
   const [hoveredWrapper, setHoveredWrapper] = React.useState<boolean>(false);
 
   const stacks = [
-    { img: '/Images/stack/javascript.png', color: 'yellow', name: 'javascript' },
-    { img: '/Images/stack/nextdotjs.svg', color: 'white', name: 'javascript' },
-    { img: '/Images/stack/css-3.svg', color: 'blue', name: 'javascript' },
-    { img: '/Images/stack/html-1.svg', color: 'orange', name: 'javascript' },
-    { img: '/Images/stack/nodejs-3.svg', color: 'green', name: 'javascript' },
-    { img: '/Images/stack/typescript.svg', color: 'blue', name: 'javascript' },
+    { img: '/Images/stack/nextdotjs.svg', color: 'white', name: 'nextjs' },
+    { img: '/Images/stack/css-3.svg', color: 'blue', name: 'css' },
+    { img: '/Images/stack/html-1.svg', color: 'orange', name: 'html' },
+    { img: '/Images/stack/nodejs-3.svg', color: 'green', name: 'nodejs' },
+    { img: '/Images/stack/react-logo.svg', color: 'yellow', name: 'react' },
+    { img: '/Images/stack/typescript.svg', color: 'blue', name: 'typescript' },
     { img: '/Images/stack/javascript.png', color: 'yellow', name: 'javascript' },
   ];
 

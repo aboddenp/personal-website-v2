@@ -15,18 +15,23 @@
 
 .imageWrapper {
   overflow: hidden;
+  /*TODO: fix images to avoid adding a min-height */
+  min-height: 277px;
+  border-radius: var(--card-border-radius);
 }
 
 .imageWrapper img {
-  border-radius: var(--card-border-radius);
   width: 100%;
   height: auto;
   box-shadow: 0px 4px 4px hsl(0 0 0 / 20);
   transition: transform 300ms ease;
 }
 
+
+/* TODO: add a cool hover effect on hover image */
 .imageWrapper:hover img {
   object-fit: cover;
+  object-position: left top;
   transform: scale(1.1);
 }
 
@@ -40,15 +45,19 @@
 }
 
 .icons {
+  flex-shrink: 0;
   margin-left: auto;
 }
 
-.icons a {
+.icons a,
+.icons button {
+  cursor: pointer;
   padding: 10px;
   border-radius: 100%;
   display: block;
   background-color: white;
   background-image: none;
+  border: none;
 }
 
 .icons path {
