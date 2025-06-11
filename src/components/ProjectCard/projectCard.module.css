@@ -15,9 +15,15 @@
 
 .imageWrapper {
   overflow: hidden;
-  /*TODO: fix images to avoid adding a min-height */
-  min-height: 277px;
   border-radius: var(--card-border-radius);
+
+}
+
+@media screen and (min-width: 480px) {
+  .imageWrapper {
+    /*TODO: fix images to avoid adding a min-height */
+    min-height: 277px;
+  }
 }
 
 .imageWrapper img {

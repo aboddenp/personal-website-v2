@@ -37,7 +37,7 @@ const Testimonials: TestimonialType[] = [
     name: 'Internal Reviewer',
     position: 'CMS Platform Review Team',
     content:
-      'This is an excellent module—clearly built with thoughtfulness and attention to detail. The configuration options are intuitive, and the support for advanced features like clipping types is impressive. Implementing something like this outside of our platform can be a challenge, so seeing it integrated so seamlessly is remarkable. The fluid text sizing and mobile responsiveness really help content stand out. If I were building a site on this platform, this is a tool I’d absolutely use. It’s a great example of a well-executed solution from someone who understands both functionality and user experience.',
+      'This is a thoughtfully built module with impressive attention to detail. The configuration is intuitive, advanced features like clipping are seamlessly integrated, and the fluid responsiveness makes content shine. It’s clear the developer understands both functionality and user experience. If I were building on this platform, this is a tool I’d definitely use.',
   },
 ];
 
