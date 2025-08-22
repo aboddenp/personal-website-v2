@@ -8,12 +8,12 @@ function About() {
       <div>
         <h2>About Me</h2>
         <p>
-          I’m a front-end developer who loves building clean, fast, and accessible websites—with a soft spot for great
-          design and smooth interactions. I have a Computer Science degree from George Mason University, and I’ve spent
-          the last years working with modern frameworks and CMS platforms to help startups and teams bring their
-          sites/apps to life. When I’m not writing code, I’m usually lifting heavy things 🏋🏽, growing dangerously hot
-          peppers 🌶️, or drinking way too much coffee ☕. The ocean is my happy place 🌊—and so is learning something
-          new.
+          I’m a software engineer specializing in front-end development, passionate about building fast, accessible, and
+          intuitive web applications. I have a keen eye for clean design and smooth user interactions, and I enjoy
+          architecting solutions that scale efficiently. I hold a Computer Science degree from George Mason University
+          and have spent the past few years working with modern frameworks, CMS platforms, and API integrations to help
+          startups and teams bring their web applications and digital experiences to life. When I’m not coding, I’m
+          usually lifting heavy things 🏋🏽, growing dangerously hot peppers 🌶️, or drinking way too much coffee ☕.
         </p>
       </div>
       <Image
