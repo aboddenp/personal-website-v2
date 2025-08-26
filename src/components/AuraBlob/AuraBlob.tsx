@@ -30,7 +30,7 @@ function AuraBlob() {
 
   if (isAutomatic) {
     blobPosX = `calc(${blobPosX}px + ${autoX}px)`;
-    blobPosY = `calc(${invertedY} +  ${autoY}px)`;
+    blobPosY = `calc(${blobPosY} +  ${autoY}px)`;
   }
 
   React.useEffect(() => {
