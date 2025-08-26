@@ -29,33 +29,36 @@ function AuraBlob() {
   }
 
   if (isAutomatic) {
-    blobPosX = `calc(${blobPosX}px + ${autoX}px)`;
+    blobPosX = `calc(${blobPosX} + ${autoX}px)`;
     blobPosY = `calc(${blobPosY} +  ${autoY}px)`;
   }
 
   React.useEffect(() => {
     if (autoTimerId.current && autoIntervalId.current) {
       clearTimeout(autoTimerId.current);
-      clearInterval(autoIntervalId.current);
+      cancelAnimationFrame(autoIntervalId.current);
       setIsAutomatic(false);
     }
 
     const autoTimer = window.setTimeout(() => {
       setIsAutomatic(true);
-      console.log('turned on automatic');
-      autoIntervalId.current = window.setInterval(() => {
+      const step = () => {
         setDegree((oldValue) => {
-          setAutoX(Math.floor(radius * Math.cos(degToRad(oldValue + 5))));
-          setAutoY(Math.floor(radius * Math.sin(degToRad(oldValue + 5))));
-          return oldValue + 5;
+          const newDegree = (oldValue + 0.2) % 360;
+          setAutoX(Math.floor(radius * Math.cos(degToRad(newDegree))));
+          setAutoY(Math.floor(radius * Math.sin(degToRad(newDegree))));
+          return newDegree;
         });
-      }, 300);
+        autoIntervalId.current = requestAnimationFrame(step);
+      };
+      autoIntervalId.current = requestAnimationFrame(step);
     }, 2000);
 
     autoTimerId.current = autoTimer;
 
     return () => {
       clearTimeout(autoTimer);
+      if (autoIntervalId.current) cancelAnimationFrame(autoIntervalId.current);
     };
   }, [posX]);
 
