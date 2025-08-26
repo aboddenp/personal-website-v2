@@ -1,0 +1,52 @@
+.blobWrapper {
+  position: fixed;
+  filter: blur(70);
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+}
+
+.blob {
+  height: 200px;
+  width: 200px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(45deg, rgba(8, 6, 107, 1) 5%, rgba(209, 25, 108, 1) 20%, rgba(9, 9, 121, 1) 35%, rgba(57, 219, 106, 1) 47%, rgba(0, 212, 255, 1) 56%);
+  background-size: 400%;
+  animation: morph 10s linear infinite, aura-glow 6s linear infinite;
+  clip-path: ellipse(50% 50% at 50% 50%);
+}
+
+@keyframes morph {
+  0% {
+    width: 250px;
+    height: 250px;
+    clip-path: ellipse(50% 50% at 50% 50%);
+  }
+
+  33% {
+    clip-path: ellipse(25% 40% at 50% 50%);
+    width: 200px;
+    height: 200px;
+  }
+
+  66% {
+    clip-path: ellipse(40% 25% at 50% 50%);
+    width: 250px;
+    height: 250px;
+  }
+
+  100% {
+    clip-path: ellipse(50% 50% at 50% 50%);
+  }
+}
+
+@keyframes aura-glow {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 100% 100%;
+  }
+}

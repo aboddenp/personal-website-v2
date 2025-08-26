@@ -7,6 +7,10 @@ function useMousePosition() {
   const debounceTime = React.useRef(Date.now());
   const debounceThreshold = 10;
 
+  function isOutOfBounds() {
+    return x < 0 || y < 0;
+  }
+
   React.useEffect(() => {
     function handleMouseMove(e: MouseEvent) {
       const newDebounceTime = Date.now();
@@ -25,7 +29,7 @@ function useMousePosition() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  return { x, y };
+  return { x, y, isOutOfBounds };
 }
 
 export default useMousePosition;

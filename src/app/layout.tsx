@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Outfit, Roboto_Flex } from 'next/font/google';
 import './globals.css';
-import Footer from '@/components/Sections/Footer';
 import DialogProvider from '@/components/DialogProvider';
 
 const outfit = Outfit({
