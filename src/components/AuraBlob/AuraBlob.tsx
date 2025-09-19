@@ -28,42 +28,73 @@ function AuraBlob() {
     return deg * (Math.PI / 180);
   }
 
-  if (isAutomatic && autoX && autoY) {
+  if (isAutomatic && (autoX || autoY)) {
     blobPosX = `calc((${blobPosX}) - (${radius}px) + ${autoX}px)`;
     blobPosY = `calc(${blobPosY} +  ${autoY}px)`;
+  } else {
+    console.log(`${isAutomatic} ${autoX} ${autoY}`);
   }
 
+  // --- Reset state whenever mouse moves ---
   React.useEffect(() => {
-    if (autoTimerId.current && autoIntervalId.current) {
+    if (autoTimerId.current) {
       clearTimeout(autoTimerId.current);
+      autoTimerId.current = null;
+    }
+    if (autoIntervalId.current) {
       cancelAnimationFrame(autoIntervalId.current);
-      setDegree(0);
-      setAutoX(0);
-      setAutoY(0);
-      setIsAutomatic(false);
+      autoIntervalId.current = null;
     }
 
-    const autoTimer = window.setTimeout(() => {
+    setIsAutomatic(false);
+    setDegree(0);
+    setAutoX(0);
+    setAutoY(0);
+
+    // Start idle timer (separate effect will catch it)
+    autoTimerId.current = window.setTimeout(() => {
       setIsAutomatic(true);
-      const step = () => {
-        setDegree((oldValue) => {
-          const newDegree = (oldValue + 0.2) % 360;
-          setAutoX(Math.floor(radius * Math.cos(degToRad(newDegree))));
-          setAutoY(Math.floor(radius * Math.sin(degToRad(newDegree))));
-          return newDegree;
-        });
-        autoIntervalId.current = requestAnimationFrame(step);
-      };
-      autoIntervalId.current = requestAnimationFrame(step);
     }, 2000);
 
-    autoTimerId.current = autoTimer;
+    return () => {
+      if (autoTimerId.current) {
+        clearTimeout(autoTimerId.current);
+        autoTimerId.current = null;
+      }
+    };
+  }, [posX, posY]); // run whenever mouse moves
+
+  // --- Run automatic animation when active ---
+  React.useEffect(() => {
+    if (!isAutomatic) return;
+
+    const step = () => {
+      setDegree((oldValue) => {
+        const newDegree = (oldValue + 0.2) % 360;
+        setAutoX(Math.floor(radius * Math.cos(degToRad(newDegree))));
+        setAutoY(Math.floor(radius * Math.sin(degToRad(newDegree))));
+        return newDegree;
+      });
+      autoIntervalId.current = requestAnimationFrame(step);
+    };
+
+    autoIntervalId.current = requestAnimationFrame(step);
 
     return () => {
-      clearTimeout(autoTimer);
+      if (autoIntervalId.current) {
+        cancelAnimationFrame(autoIntervalId.current);
+        autoIntervalId.current = null;
+      }
+    };
+  }, [isAutomatic]);
+
+  // --- Cleanup on unmount ---
+  React.useEffect(() => {
+    return () => {
+      if (autoTimerId.current) clearTimeout(autoTimerId.current);
       if (autoIntervalId.current) cancelAnimationFrame(autoIntervalId.current);
     };
-  }, [posX]);
+  }, []);
 
   return (
     <motion.div
