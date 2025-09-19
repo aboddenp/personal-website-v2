@@ -31,8 +31,6 @@ function AuraBlob() {
   if (isAutomatic && (autoX || autoY)) {
     blobPosX = `calc((${blobPosX}) - (${radius}px) + ${autoX}px)`;
     blobPosY = `calc(${blobPosY} +  ${autoY}px)`;
-  } else {
-    console.log(`${isAutomatic} ${autoX} ${autoY}`);
   }
 
   // --- Reset state whenever mouse moves ---
