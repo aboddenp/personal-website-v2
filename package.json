@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@floating-ui/react": "^0.27.16",
     "@radix-ui/react-dialog": "^1.1.14",
+    "@types/howler": "^2.2.12",
     "embla-carousel-react": "^8.6.0",
     "embla-carousel-wheel-gestures": "^8.0.2",
+    "howler": "^2.2.4",
     "lucide-react": "^0.511.0",
     "motion": "^12.12.1",
     "next": "15.3.2",

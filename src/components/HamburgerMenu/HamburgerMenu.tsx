@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { Link } from '@/components/Navbar/data/main_menu';
 import HamburgerButton from '@/components/HamburgerButton';
+import NavItem from '@/components/NavItem';
 import styles from './HamburgerMenu.module.css';
 
 function HamburgerMenu({ links, className }: { links: Link[]; className?: string }) {
@@ -23,9 +24,7 @@ function HamburgerMenu({ links, className }: { links: Link[]; className?: string
         >
           <ul>
             {links.map(({ label, link }: Link) => (
-              <li key={label + link}>
-                <a href={link}> {label} </a>
-              </li>
+              <NavItem key={label + link} link={link} label={label} />
             ))}
           </ul>
         </nav>

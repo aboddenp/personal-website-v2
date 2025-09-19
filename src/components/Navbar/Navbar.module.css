@@ -55,7 +55,8 @@
 }
 
 .mobileMenu {
-  display: block;
+  display: flex;
+  gap: var(--spacing-2);
 }
 
 .desktopMenu {
@@ -68,7 +69,8 @@
   }
 
   .desktopMenu {
-    display: block;
+    display: flex;
+    gap: var(--link-gap);
   }
 
 }

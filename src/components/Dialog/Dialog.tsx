@@ -6,6 +6,7 @@ import { useDialog } from '../DialogProvider';
 import { X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion'; // corrected import
 import VisuallyHidden from '../VisuallyHidden';
+import useSound from '@/hooks/useSound';
 
 type DialogProps = {
   description: string;
@@ -16,11 +17,14 @@ type DialogProps = {
 function Dialog({ description, title, children }: DialogProps) {
   const { isOpen, closeDialog, openDialog } = useDialog();
   const [showContent, setShowContent] = React.useState(isOpen);
+  const playOpenFX = useSound('/sounds/boop-bap.wav');
+  const playCloseFX = useSound('/sounds/exit-boop.wav');
 
   // Track isOpen and delay unmount for exit animation
   React.useEffect(() => {
     if (isOpen) {
       setShowContent(true);
+      playOpenFX();
     } else {
       const timeout = setTimeout(() => setShowContent(false), 400); // match exit animation
       return () => clearTimeout(timeout);
@@ -32,7 +36,10 @@ function Dialog({ description, title, children }: DialogProps) {
       open={isOpen}
       onOpenChange={(open) => {
         if (open) openDialog();
-        else closeDialog();
+        else {
+          closeDialog();
+          playCloseFX();
+        }
       }}
     >
       {showContent && (

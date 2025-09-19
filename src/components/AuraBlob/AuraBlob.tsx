@@ -28,8 +28,8 @@ function AuraBlob() {
     return deg * (Math.PI / 180);
   }
 
-  if (isAutomatic) {
-    blobPosX = `calc(${blobPosX} + ${autoX}px)`;
+  if (isAutomatic && autoX && autoY) {
+    blobPosX = `calc((${blobPosX}) - (${radius}px) + ${autoX}px)`;
     blobPosY = `calc(${blobPosY} +  ${autoY}px)`;
   }
 
@@ -37,6 +37,9 @@ function AuraBlob() {
     if (autoTimerId.current && autoIntervalId.current) {
       clearTimeout(autoTimerId.current);
       cancelAnimationFrame(autoIntervalId.current);
+      setDegree(0);
+      setAutoX(0);
+      setAutoY(0);
       setIsAutomatic(false);
     }
 

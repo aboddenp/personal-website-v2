@@ -3,10 +3,13 @@ import Image from 'next/image';
 import * as React from 'react';
 import { hover, motion } from 'motion/react';
 import styles from './stack.module.css';
+import useSound from '@/hooks/useSound';
 
 function TechStack() {
   const [hovered, setHovered] = React.useState<number | null>(null);
   const [hoveredWrapper, setHoveredWrapper] = React.useState<boolean>(false);
+  const playSoundEffect = useSound('/sounds/card-spread.wav', 1000);
+  const firstHover = React.useRef(true);
 
   const stacks = [
     { img: '/Images/stack/nextdotjs.svg', color: 'white', name: 'nextjs' },
@@ -34,8 +37,17 @@ function TechStack() {
 
   return (
     <motion.div
-      onMouseOver={() => setHoveredWrapper(true)}
-      onMouseLeave={() => setHoveredWrapper(false)}
+      onMouseOver={() => {
+        setHoveredWrapper(true);
+        if (firstHover.current) {
+          playSoundEffect();
+          firstHover.current = false;
+        }
+      }}
+      onMouseLeave={() => {
+        setHoveredWrapper(false);
+        firstHover.current = true;
+      }}
       layout="position"
       style={{
         display: 'grid',
