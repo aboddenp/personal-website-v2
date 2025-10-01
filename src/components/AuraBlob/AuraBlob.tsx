@@ -96,7 +96,7 @@ function AuraBlob() {
 
   return (
     <motion.div
-      animate={{ top: blobPosY, left: blobPosX, transition: { stiffness: 150, damping: 80, type: 'spring' } }}
+      animate={{ y: blobPosY, x: blobPosX, transition: { stiffness: 150, damping: 80, type: 'spring' } }}
       className={`${styles.blobWrapper}`}
     >
       <div className={`${styles.blob}`}></div>
