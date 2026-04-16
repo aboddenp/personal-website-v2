@@ -17,6 +17,14 @@ const Testimonials: TestimonialType[] = [
   },
   {
     id: crypto.randomUUID(),
+    avatar_src: '/Images/duff_ferguson_avatar.jpeg',
+    name: 'Duff Ferguson',
+    position: 'AI-enabled growth marketer @QuikStor',
+    content:
+      'Aster brings master skills to his work building strong, fast websites and online experiences that look great and function perfectly to satisfy the high demands of B2B SaaS companies and their customers. In addition to these talents, he is a thoughtful and dependable colleague who leans in on deadlines and thrives under pressure situations. It has been a real pleasure to work with him.',
+  },
+  {
+    id: crypto.randomUUID(),
     avatar_src: '/Images/amec_avatar.jpeg',
     name: 'Amec Velasquez',
     position: 'Web Development Lead @ Kalungi',

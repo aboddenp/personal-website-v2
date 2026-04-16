@@ -2,8 +2,6 @@
   position: fixed;
   filter: blur(70px);
   z-index: -1;
-  top: 100%;
-  left: 100%;
 }
 
 .blob {

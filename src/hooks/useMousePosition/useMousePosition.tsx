@@ -1,27 +1,23 @@
 'use client';
+import { useMotionValue } from 'motion/react';
 import * as React from 'react';
 
+const INIT = -1000;
+
 function useMousePosition() {
-  const [x, setX] = React.useState<number>(-100);
-  const [y, setY] = React.useState<number>(-100);
-  const debounceTime = React.useRef(Date.now());
-  const debounceThreshold = 10;
+  const x = useMotionValue(INIT);
+  const y = useMotionValue(INIT);
+  const initiated = React.useRef<boolean>(false);
 
   function isOutOfBounds() {
-    return x < 0 || y < 0;
+    return x.get() < 0 || y.get() < 0;
   }
 
   React.useEffect(() => {
     function handleMouseMove(e: MouseEvent) {
-      const newDebounceTime = Date.now();
-      const timeDifference = newDebounceTime - debounceTime.current;
-      if (timeDifference > debounceThreshold) {
-        setX(e.clientX);
-        setY(e.clientY);
-        debounceTime.current = newDebounceTime;
-      } else {
-        console.log('skipped frames');
-      }
+      if (initiated.current == false) initiated.current = true;
+      x.set(e.clientX);
+      y.set(e.clientY);
     }
 
     window.addEventListener('mousemove', (e) => handleMouseMove(e));
@@ -29,7 +25,7 @@ function useMousePosition() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  return { x, y, isOutOfBounds };
+  return { x, y, isOutOfBounds, initiated };
 }
 
 export default useMousePosition;

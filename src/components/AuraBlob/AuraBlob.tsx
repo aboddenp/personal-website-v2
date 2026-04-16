@@ -1,36 +1,35 @@
 'use client';
 import * as React from 'react';
-import { motion } from 'motion/react';
+import { motion, useSpring, useTransform } from 'motion/react';
 import styles from './AuraBlob.module.css';
 import useMousePosition from '@/hooks/useMousePosition';
+import UseWindowSize from '@/hooks/useWindowSize';
+
+const SPRING = { stiffness: 150, damping: 80, type: 'spring' };
+const INTIAL_POSITION = { x: 700, y: 300 };
 
 function AuraBlob() {
-  const { x: posX, y: posY, isOutOfBounds } = useMousePosition();
-  const [autoX, setAutoX] = React.useState(0);
-  const [autoY, setAutoY] = React.useState(0);
+  const { x: posX, y: posY } = useMousePosition();
+  const [width, height] = UseWindowSize();
 
-  let blobPosX = `calc(100% - ${posX}px)`;
-  let blobPosY = `calc(100% - ${posY}px)`;
+  const x = useSpring(posX, SPRING);
+  const y = useSpring(posY, SPRING);
 
-  if (isOutOfBounds()) {
-    blobPosX = '500px';
-    blobPosY = '500px';
-  }
+  const invertedX = useTransform(x, (v) => (v >= 0 ? width.get() - v : INTIAL_POSITION.x));
+  const invertedY = useTransform(y, (v) => (v >= 0 ? height.get() - v : INTIAL_POSITION.y));
 
-  const [isAutomatic, setIsAutomatic] = React.useState<boolean>(false);
+  const autoX = useSpring(INTIAL_POSITION.x, SPRING);
+  const autoY = useSpring(INTIAL_POSITION.y, SPRING);
+
+  const [isAutomatic, setIsAutomatic] = React.useState<boolean>(true);
 
   const autoTimerId = React.useRef<number | null>(null);
   const autoIntervalId = React.useRef<number | null>(null);
-  const [_, setDegree] = React.useState<number>(0);
+  const degree = React.useRef<number>(0);
   const radius = 200;
 
   function degToRad(deg: number) {
     return deg * (Math.PI / 180);
-  }
-
-  if (isAutomatic && (autoX || autoY)) {
-    blobPosX = `calc((${blobPosX}) - (${radius}px) + ${autoX}px)`;
-    blobPosY = `calc(${blobPosY} +  ${autoY}px)`;
   }
 
   // --- Reset state whenever mouse moves ---
@@ -45,9 +44,7 @@ function AuraBlob() {
     }
 
     setIsAutomatic(false);
-    setDegree(0);
-    setAutoX(0);
-    setAutoY(0);
+    degree.current = 0;
 
     // Start idle timer (separate effect will catch it)
     autoTimerId.current = window.setTimeout(() => {
@@ -67,12 +64,11 @@ function AuraBlob() {
     if (!isAutomatic) return;
 
     const step = () => {
-      setDegree((oldValue) => {
-        const newDegree = (oldValue + 0.2) % 360;
-        setAutoX(Math.floor(radius * Math.cos(degToRad(newDegree))));
-        setAutoY(Math.floor(radius * Math.sin(degToRad(newDegree))));
-        return newDegree;
-      });
+      degree.current = (degree.current + 0.2) % 360;
+      const circlePositionX = Math.floor(radius * Math.cos(degToRad(degree.current)));
+      const circlePositionY = Math.floor(radius * Math.sin(degToRad(degree.current)));
+      autoX.set(invertedX.get() - radius + circlePositionX);
+      autoY.set(invertedY.get() - radius + circlePositionY);
       autoIntervalId.current = requestAnimationFrame(step);
     };
 
@@ -96,7 +92,7 @@ function AuraBlob() {
 
   return (
     <motion.div
-      animate={{ y: blobPosY, x: blobPosX, transition: { stiffness: 150, damping: 80, type: 'spring' } }}
+      style={{ x: isAutomatic ? autoX : invertedX, y: isAutomatic ? autoY : invertedY }}
       className={`${styles.blobWrapper}`}
     >
       <div className={`${styles.blob}`}></div>

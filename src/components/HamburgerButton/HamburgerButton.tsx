@@ -23,15 +23,19 @@ function HamburgerButton({ isOpen, ...delegate }: HamburgerProps) {
         strokeLinejoin="round"
       >
         <motion.path
-          animate={{ rotate: isOpen ? '-45deg' : '0', d: isOpen ? 'M4 12h16' : 'M4 6h16' }}
-          initial="false"
           d="M4 6h16"
+          initial={false}
+          animate={{ rotate: isOpen ? '-45deg' : '0deg', d: isOpen ? 'M4 12h16' : 'M4 6h16' }}
         />
-        <motion.path animate={{ opacity: isOpen ? 0 : 1 }} initial="false" d="M4 12h16" />
         <motion.path
-          animate={{ rotate: isOpen ? '45deg' : '0', d: isOpen ? 'M4 12h16' : 'M4 18h16' }}
-          initial="false"
+          d="M4 12h16"
+          initial={{ opacity: 1 }}
+          animate={{ opacity: isOpen ? 0 : 1 }}
+        />
+        <motion.path
           d="M4 18h16"
+          initial={false}
+          animate={{ rotate: isOpen ? '45deg' : '0deg', d: isOpen ? 'M4 12h16' : 'M4 18h16' }}
         />
       </svg>
     </button>

@@ -1,14 +1,13 @@
 'use client';
 import * as React from 'react';
-import { Howl, Howler } from 'howler';
+import { Howl } from 'howler';
 import useThrottledFunction from '../useThrottle';
 
 function useSound(src: string, throttleAmount: number = 1000) {
   const HowlRef = React.useRef<null | Howl>(null);
 
   function play() {
-    if (HowlRef.current) {
-      console.log('should play sound');
+    if (HowlRef.current && !HowlRef.current.playing()) {
       HowlRef.current?.play();
     }
   }
@@ -22,10 +21,11 @@ function useSound(src: string, throttleAmount: number = 1000) {
   }
 
   React.useEffect(() => {
-    HowlRef.current = new Howl({
-      src,
-      html5: true,
-    });
+    HowlRef.current = new Howl({ src });
+    return () => {
+      HowlRef.current?.unload();
+      HowlRef.current = null;
+    };
   }, []);
 
   return debouncedPlay;
