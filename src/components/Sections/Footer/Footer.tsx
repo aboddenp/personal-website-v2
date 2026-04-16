@@ -9,7 +9,7 @@ function Footer() {
   return (
     <div className={`spaced ${styles.wrapper}`}>
       <Image
-        style={{ objectFit: 'contain', width: 'auto', height: 'auto' }}
+        style={{ objectFit: 'contain', width: 'auto', height: '331px' }}
         src={'/Images/standing-avatar.png'}
         alt={'standing avatar waving'}
         width={221}

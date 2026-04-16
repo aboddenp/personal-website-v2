@@ -1,88 +1,89 @@
 'use client';
 import * as React from 'react';
-import { motion, useSpring, useTransform } from 'motion/react';
+import { motion, useSpring, useTransform, useMotionValue } from 'motion/react';
 import styles from './AuraBlob.module.css';
 import useMousePosition from '@/hooks/useMousePosition';
 import UseWindowSize from '@/hooks/useWindowSize';
 
 const SPRING = { stiffness: 150, damping: 80, type: 'spring' };
-const INTIAL_POSITION = { x: 700, y: 300 };
 
 function AuraBlob() {
-  const { x: posX, y: posY } = useMousePosition();
+  const { x: posX, y: posY, initiated } = useMousePosition();
   const [width, height] = UseWindowSize();
+  const [isMounted, setIsMounted] = React.useState(false);
 
-  const x = useSpring(posX, SPRING);
-  const y = useSpring(posY, SPRING);
+  // Blob starts at viewport center, transitions to inverted mouse on first move
+  const blobX = useMotionValue(0);
+  const blobY = useMotionValue(0);
 
-  const invertedX = useTransform(x, (v) => (v >= 0 ? width.get() - v : INTIAL_POSITION.x));
-  const invertedY = useTransform(y, (v) => (v >= 0 ? height.get() - v : INTIAL_POSITION.y));
+  const smoothX = useSpring(blobX, SPRING);
+  const smoothY = useSpring(blobY, SPRING);
 
-  const autoX = useSpring(INTIAL_POSITION.x, SPRING);
-  const autoY = useSpring(INTIAL_POSITION.y, SPRING);
+  React.useEffect(() => {
+    smoothX.jump(window.innerWidth / 2);
+    smoothY.jump(window.innerHeight / 2);
+    blobX.jump(window.innerWidth / 2);
+    blobY.jump(window.innerHeight / 2);
 
-  const [isAutomatic, setIsAutomatic] = React.useState<boolean>(true);
+    setIsMounted(true);
+  }, []);
 
+  // Once mouse moves, keep blobX/Y in sync with inverted mouse position
+  React.useEffect(() => {
+    const unsub = posX.on('change', () => {
+      if (!initiated.current) return;
+      blobX.set(width.get() - posX.get());
+      blobY.set(height.get() - posY.get());
+    });
+    return () => unsub();
+  }, []);
+
+  // --- Auto orbit (unchanged logic) ---
+  const [isAutomatic, setIsAutomatic] = React.useState(false);
   const autoTimerId = React.useRef<number | null>(null);
   const autoIntervalId = React.useRef<number | null>(null);
-  const degree = React.useRef<number>(0);
+  const degree = React.useRef(0);
   const radius = 200;
 
-  function degToRad(deg: number) {
-    return deg * (Math.PI / 180);
-  }
-
-  // --- Reset state whenever mouse moves ---
   React.useEffect(() => {
-    if (autoTimerId.current) {
-      clearTimeout(autoTimerId.current);
-      autoTimerId.current = null;
+    function scheduleOrbitPause() {
+      if (autoTimerId.current) clearTimeout(autoTimerId.current);
+      if (autoIntervalId.current) cancelAnimationFrame(autoIntervalId.current);
+      setIsAutomatic(false);
+      degree.current = 0;
+
+      autoTimerId.current = window.setTimeout(() => {
+        setIsAutomatic(true);
+      }, 2000);
     }
-    if (autoIntervalId.current) {
-      cancelAnimationFrame(autoIntervalId.current);
-      autoIntervalId.current = null;
-    }
 
-    setIsAutomatic(false);
-    degree.current = 0;
-
-    // Start idle timer (separate effect will catch it)
-    autoTimerId.current = window.setTimeout(() => {
-      setIsAutomatic(true);
-    }, 2000);
-
+    scheduleOrbitPause();
+    const u1 = posX.on('change', scheduleOrbitPause);
+    const u2 = posY.on('change', scheduleOrbitPause);
     return () => {
-      if (autoTimerId.current) {
-        clearTimeout(autoTimerId.current);
-        autoTimerId.current = null;
-      }
+      u1();
+      u2();
+      if (autoTimerId.current) clearTimeout(autoTimerId.current);
     };
-  }, [posX, posY]); // run whenever mouse moves
+  }, [posX, posY]);
 
-  // --- Run automatic animation when active ---
   React.useEffect(() => {
-    if (!isAutomatic) return;
+    if (!isAutomatic || !isMounted || !initiated.current) return;
 
     const step = () => {
       degree.current = (degree.current + 0.2) % 360;
-      const circlePositionX = Math.floor(radius * Math.cos(degToRad(degree.current)));
-      const circlePositionY = Math.floor(radius * Math.sin(degToRad(degree.current)));
-      autoX.set(invertedX.get() - radius + circlePositionX);
-      autoY.set(invertedY.get() - radius + circlePositionY);
+      const cx = radius * Math.cos(degree.current * (Math.PI / 180));
+      const cy = radius * Math.sin(degree.current * (Math.PI / 180));
+      blobX.set(width.get() - posX.get() - radius + cx);
+      blobY.set(height.get() - posY.get() - radius + cy);
       autoIntervalId.current = requestAnimationFrame(step);
     };
-
     autoIntervalId.current = requestAnimationFrame(step);
-
     return () => {
-      if (autoIntervalId.current) {
-        cancelAnimationFrame(autoIntervalId.current);
-        autoIntervalId.current = null;
-      }
+      if (autoIntervalId.current) cancelAnimationFrame(autoIntervalId.current);
     };
   }, [isAutomatic]);
 
-  // --- Cleanup on unmount ---
   React.useEffect(() => {
     return () => {
       if (autoTimerId.current) clearTimeout(autoTimerId.current);
@@ -91,11 +92,8 @@ function AuraBlob() {
   }, []);
 
   return (
-    <motion.div
-      style={{ x: isAutomatic ? autoX : invertedX, y: isAutomatic ? autoY : invertedY }}
-      className={`${styles.blobWrapper}`}
-    >
-      <div className={`${styles.blob}`}></div>
+    <motion.div style={{ x: smoothX, y: smoothY, opacity: isMounted ? '1' : '0' }} className={styles.blobWrapper}>
+      <div className={styles.blob} />
     </motion.div>
   );
 }
