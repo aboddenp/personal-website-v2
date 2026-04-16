@@ -4,7 +4,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import styles from './testimonialSlider.module.css';
 import useMousePosition from '@/hooks/useMousePosition';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useMotionValueEvent, useMotionValue } from 'motion/react';
+import { useMotionValueEvent } from 'motion/react';
 
 function TestimonialSlider({ children }: { children: React.ReactNode }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'start', loop: true }, []);

@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import { motion, useSpring, useTransform, useMotionValue } from 'motion/react';
+import { motion, useSpring, useMotionValue } from 'motion/react';
 import styles from './AuraBlob.module.css';
 import useMousePosition from '@/hooks/useMousePosition';
 import UseWindowSize from '@/hooks/useWindowSize';
@@ -26,7 +26,7 @@ function AuraBlob() {
     blobY.jump(window.innerHeight / 2);
 
     setIsMounted(true);
-  }, []);
+  }, [smoothX, smoothY, blobX, blobY]);
 
   // Once mouse moves, keep blobX/Y in sync with inverted mouse position
   React.useEffect(() => {
@@ -36,7 +36,7 @@ function AuraBlob() {
       blobY.set(height.get() - posY.get());
     });
     return () => unsub();
-  }, []);
+  }, [posX, posY, blobX, blobY, width, height, initiated]);
 
   // --- Auto orbit (unchanged logic) ---
   const [isAutomatic, setIsAutomatic] = React.useState(false);
@@ -69,7 +69,6 @@ function AuraBlob() {
 
   React.useEffect(() => {
     if (!isAutomatic || !isMounted || !initiated.current) return;
-
     const step = () => {
       degree.current = (degree.current + 0.2) % 360;
       const cx = radius * Math.cos(degree.current * (Math.PI / 180));
@@ -82,7 +81,7 @@ function AuraBlob() {
     return () => {
       if (autoIntervalId.current) cancelAnimationFrame(autoIntervalId.current);
     };
-  }, [isAutomatic]);
+  }, [isAutomatic, isMounted, blobX, blobY, width, height, posX, posY, initiated]);
 
   React.useEffect(() => {
     return () => {

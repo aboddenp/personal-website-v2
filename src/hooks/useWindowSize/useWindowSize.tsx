@@ -15,6 +15,7 @@ export default function UseWindowSize() {
 
     window.addEventListener('resize', updateSize);
     return () => window.removeEventListener('resize', updateSize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return [width, height];

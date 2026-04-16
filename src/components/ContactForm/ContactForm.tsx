@@ -5,7 +5,7 @@ import * as React from 'react';
 const recapcha_key = process.env.NEXT_PUBLIC_RECAPCHA_KEY || '';
 
 function ContactForm() {
-  const recaptcha = React.useRef<any | null>(null);
+  const recaptcha = React.useRef<ReCaptcha | null>(null);
   const formRef = React.useRef<HTMLFormElement | null>(null);
   const id = React.useId();
   const [status, setStatus] = React.useState<string>('idle');
@@ -39,6 +39,7 @@ function ContactForm() {
         console.log(message);
       }
     } catch (e) {
+      console.error(e);
       setStatus('error');
     }
   }

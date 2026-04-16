@@ -1,4 +1,4 @@
-import { BookOpenText, ExternalLink, GraduationCap } from 'lucide-react';
+import { BookOpenText, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import styles from './projectCard.module.css';
 import * as React from 'react';

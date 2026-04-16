@@ -72,7 +72,8 @@ function PreferencesMenu() {
           />
           <li
             onClick={() => {
-              playFX(), handleVolume();
+              playFX();
+              handleVolume();
             }}
           >
             <button>

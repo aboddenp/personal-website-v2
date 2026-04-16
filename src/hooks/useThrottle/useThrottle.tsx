@@ -4,7 +4,7 @@ import { useRef, useCallback } from 'react';
  * Returns a throttled version of the function.
  * Executes immediately, then ignores calls for the specified delay.
  */
-function useThrottledFunction<T extends (...args: any[]) => void>(fn: T, delay: number = 1000): T {
+function useThrottledFunction<T extends (...args: unknown[]) => void>(fn: T, delay: number = 1000): T {
   const lastCallRef = useRef<number>(0);
 
   const throttledFn = useCallback(

@@ -12,7 +12,8 @@ function Hero() {
         alt="Aster Bodden Animated Profile Picture"
       ></Image>
       <h1>
-        Hi, I'm Aster. I'm a versatile developer who transforms ideas into beautiful and functional web applications.
+        Hi, I&apos;m Aster. I&apos;m a versatile developer who transforms ideas into beautiful and functional web
+        applications.
       </h1>
 
       <svg width="24" height="58" viewBox="0 0 24 58" fill="none" xmlns="http://www.w3.org/2000/svg">

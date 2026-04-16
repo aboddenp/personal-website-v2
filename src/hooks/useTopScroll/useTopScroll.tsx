@@ -5,22 +5,16 @@ function useTopScroll(): boolean {
   const [isTop, setIsTop] = React.useState(true);
 
   React.useEffect(() => {
-    if (window.scrollY !== 0) {
-      setIsTop(false);
-    }
-    function handleScroll() {
-      if (window.scrollY == 0) {
-        setIsTop(true);
-      }
-      if (window.scrollY != 0 && isTop) {
-        setIsTop(false);
-      }
-    }
+    const handleScroll = () => {
+      setIsTop(window.scrollY === 0);
+    };
 
-    document.addEventListener('scroll', handleScroll);
+    handleScroll(); // set initial value on mount
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
-      document.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 

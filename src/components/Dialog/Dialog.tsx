@@ -29,7 +29,7 @@ function Dialog({ description, title, children }: DialogProps) {
       const timeout = setTimeout(() => setShowContent(false), 400); // match exit animation
       return () => clearTimeout(timeout);
     }
-  }, [isOpen]);
+  }, [isOpen, playOpenFX]);
 
   return (
     <Dial.Root

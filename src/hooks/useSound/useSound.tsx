@@ -14,19 +14,13 @@ function useSound(src: string, throttleAmount: number = 1000) {
 
   const debouncedPlay = useThrottledFunction(play, throttleAmount);
 
-  function stop() {
-    if (HowlRef.current) {
-      HowlRef.current.stop();
-    }
-  }
-
   React.useEffect(() => {
     HowlRef.current = new Howl({ src });
     return () => {
       HowlRef.current?.unload();
       HowlRef.current = null;
     };
-  }, []);
+  }, [src]);
 
   return debouncedPlay;
 }

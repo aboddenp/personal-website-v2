@@ -12,7 +12,7 @@ function Projects() {
   const { openDialog } = useDialog();
   return (
     <section id={'projects'} className={`spaced `}>
-      <h2 className={`${styles.sectionHeading}`}>Things I've Built</h2>
+      <h2 className={`${styles.sectionHeading}`}>Things I&apos;ve Built</h2>
       <div className={styles.grid}>
         {projectsData.map((delegate, index) => (
           <ProjectCard key={index} {...delegate} internal_link={delegate.internal_link ? openDialog : undefined} />

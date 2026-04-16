@@ -3,7 +3,6 @@ import styles from './footer.module.css';
 import ContactForm from '@/components/ContactForm';
 import Image from 'next/image';
 import navLinks from '@/components/Navbar/data/main_menu';
-import { Linkedin } from 'lucide-react';
 
 function Footer() {
   return (

@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import styles from './about.module.css';
 import * as React from 'react';
-import SoundBox from '@/components/SoundBox';
 
 function About() {
   return (
