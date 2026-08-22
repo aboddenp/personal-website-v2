@@ -4,7 +4,9 @@ import type { NextConfig } from 'next';
 // scripts and Cloudflare (email obfuscation) injects inline scripts at the proxy layer.
 // A nonce-based CSP via middleware is possible future hardening.
 // Deployed as Report-Only first; rename to Content-Security-Policy once the live site
-// shows no violations while exercising the contact form captcha.
+// shows no violations while exercising the contact form captcha. When flipping to
+// enforcing, also append 'upgrade-insecure-requests' (it is invalid in Report-Only
+// mode and the browser logs a console error).
 const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com https://static.cloudflareinsights.com https://ajax.cloudflare.com",
@@ -17,7 +19,6 @@ const csp = [
   "base-uri 'self'",
   "form-action 'self'",
   "frame-ancestors 'none'",
-  'upgrade-insecure-requests',
 ].join('; ');
 
 const nextConfig: NextConfig = {
