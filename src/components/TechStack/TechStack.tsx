@@ -8,7 +8,7 @@ import useSound from '@/hooks/useSound';
 function TechStack() {
   const [, setHovered] = React.useState<number | null>(null);
   const [hoveredWrapper, setHoveredWrapper] = React.useState<boolean>(false);
-  const playSoundEffect = useSound('/sounds/card-spread.wav', 1000);
+  const playSoundEffect = useSound(['/sounds/card-spread.webm', '/sounds/card-spread.mp3'], 1000);
   const firstHover = React.useRef(true);
 
   const stacks = [

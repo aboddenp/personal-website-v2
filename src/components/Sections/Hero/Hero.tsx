@@ -10,13 +10,22 @@ function Hero() {
         height="245"
         src="/Images/Avatar_Aster.png"
         alt="Aster Bodden Animated Profile Picture"
+        priority
       ></Image>
       <h1>
         Hi, I&apos;m Aster. I&apos;m a versatile developer who transforms ideas into beautiful and functional web
         applications.
       </h1>
 
-      <svg width="24" height="58" viewBox="0 0 24 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        width="24"
+        height="58"
+        viewBox="0 0 24 58"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        focusable="false"
+      >
         <path
           d="M12 6.50964V10.5096M12 2.50964C15.866 2.50964 19 5.64365 19 9.50964V15.5096C19 19.3756 15.866 22.5096 12 22.5096C8.13401 22.5096 5 19.3756 5 15.5096V9.50964C5 5.64365 8.13401 2.50964 12 2.50964Z"
           stroke="white"

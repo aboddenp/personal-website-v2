@@ -2,11 +2,14 @@
   position: fixed;
   filter: blur(70px);
   z-index: -1;
+  will-change: transform;
 }
 
 .blob {
-  height: 200px;
-  width: 200px;
+  /* fixed size; pulsing is done with transform: scale() in the keyframes so the
+     animation composites instead of triggering layout + a 70px-blur repaint per frame */
+  height: 250px;
+  width: 250px;
   pointer-events: none;
   transform: translate(-50%, -50%);
   background: linear-gradient(45deg, rgba(8, 6, 107, 1) 5%, rgba(209, 25, 108, 1) 20%, rgba(9, 9, 121, 1) 35%, rgba(57, 219, 106, 1) 47%, rgba(0, 212, 255, 1) 56%);
@@ -17,24 +20,22 @@
 
 @keyframes morph {
   0% {
-    width: 250px;
-    height: 250px;
+    transform: translate(-50%, -50%) scale(1);
     clip-path: ellipse(50% 50% at 50% 50%);
   }
 
   33% {
     clip-path: ellipse(25% 40% at 50% 50%);
-    width: 200px;
-    height: 200px;
+    transform: translate(-50%, -50%) scale(0.8);
   }
 
   66% {
     clip-path: ellipse(40% 25% at 50% 50%);
-    width: 250px;
-    height: 250px;
+    transform: translate(-50%, -50%) scale(1);
   }
 
   100% {
+    transform: translate(-50%, -50%) scale(1);
     clip-path: ellipse(50% 50% at 50% 50%);
   }
 }

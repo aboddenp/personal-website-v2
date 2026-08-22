@@ -1,15 +1,19 @@
 'use client';
-import ReCaptcha from 'react-google-recaptcha';
+import type ReCaptchaType from 'react-google-recaptcha';
 import * as React from 'react';
+
+// Loaded on first form interaction so the ~300 KiB Google script stays off the initial page load
+const ReCaptcha = React.lazy(() => import('react-google-recaptcha'));
 
 const recapcha_key = process.env.NEXT_PUBLIC_RECAPCHA_KEY || '';
 
 function ContactForm() {
-  const recaptcha = React.useRef<ReCaptcha | null>(null);
+  const recaptcha = React.useRef<ReCaptchaType | null>(null);
   const formRef = React.useRef<HTMLFormElement | null>(null);
   const id = React.useId();
   const [status, setStatus] = React.useState<string>('idle');
   const [showCaptcha, setShowCaptcha] = React.useState(false);
+  const [interacted, setInteracted] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | null>('something went wrong, try again later');
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -17,7 +21,7 @@ function ContactForm() {
     const recaptchaValue = recaptcha?.current?.getValue();
     if (!recaptchaValue) {
       setStatus('error');
-      setErrorMessage('Please verify the recaptcha');
+      setErrorMessage('Please complete the captcha below');
       window.setTimeout(() => {
         setStatus('idle');
       }, 3000);
@@ -47,6 +51,7 @@ function ContactForm() {
   return (
     <div id={'contact'} className="form-container">
       <form
+        onFocusCapture={() => setInteracted(true)}
         onChange={() => {
           setShowCaptcha(formRef.current?.checkValidity() || false);
         }}
@@ -99,7 +104,7 @@ function ContactForm() {
             minLength={2}
             maxLength={500}
             required
-            id={`email-${id}`}
+            id={`message-${id}`}
           />
         </div>
         <button className="button-primary" type="submit">
@@ -113,7 +118,11 @@ function ContactForm() {
             errorMessage
           )}
         </button>
-        <ReCaptcha style={{ display: showCaptcha ? 'block' : 'none' }} ref={recaptcha} sitekey={recapcha_key} />
+        {interacted && (
+          <React.Suspense fallback={null}>
+            <ReCaptcha style={{ display: showCaptcha ? 'block' : 'none' }} ref={recaptcha} sitekey={recapcha_key} />
+          </React.Suspense>
+        )}
       </form>
     </div>
   );

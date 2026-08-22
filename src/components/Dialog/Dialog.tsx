@@ -4,7 +4,7 @@ import * as Dial from '@radix-ui/react-dialog';
 import styles from './Dialog.module.css';
 import { useDialog } from '../DialogProvider';
 import { X } from 'lucide-react';
-import { AnimatePresence, motion } from 'framer-motion'; // corrected import
+import { AnimatePresence, motion } from 'motion/react';
 import VisuallyHidden from '../VisuallyHidden';
 import useSound from '@/hooks/useSound';
 
@@ -17,8 +17,8 @@ type DialogProps = {
 function Dialog({ description, title, children }: DialogProps) {
   const { isOpen, closeDialog, openDialog } = useDialog();
   const [showContent, setShowContent] = React.useState(isOpen);
-  const playOpenFX = useSound('/sounds/boop-bap.wav');
-  const playCloseFX = useSound('/sounds/exit-boop.wav');
+  const playOpenFX = useSound(['/sounds/boop-bap.webm', '/sounds/boop-bap.mp3']);
+  const playCloseFX = useSound(['/sounds/exit-boop.webm', '/sounds/exit-boop.mp3']);
 
   // Track isOpen and delay unmount for exit animation
   React.useEffect(() => {
@@ -67,7 +67,7 @@ function Dialog({ description, title, children }: DialogProps) {
                       {children}
                     </div>
 
-                    <Dial.Close className={styles.close}>
+                    <Dial.Close className={styles.close} aria-label="Close dialog">
                       <X />
                     </Dial.Close>
                   </motion.div>

@@ -6,14 +6,18 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint src"
   },
+  "browserslist": [
+    "chrome 111",
+    "edge 111",
+    "firefox 111",
+    "safari 16.4"
+  ],
   "dependencies": {
     "@floating-ui/react": "^0.27.16",
     "@radix-ui/react-dialog": "^1.1.14",
-    "@types/howler": "^2.2.12",
     "embla-carousel-react": "^8.6.0",
-    "embla-carousel-wheel-gestures": "^8.0.2",
     "howler": "^2.2.4",
     "lucide-react": "^0.511.0",
     "motion": "^12.12.1",
@@ -25,6 +29,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/howler": "^2.2.12",
     "@types/node": "^20",
     "@types/nodemailer": "^8.0.0",
     "@types/react": "^19",

@@ -26,12 +26,17 @@ function ProjectCard({ img_src, title, description, external_link, internal_link
           </div>
           <div className={styles.icons}>
             {external_link && (
-              <a target="_blank" href={external_link}>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Open ${title} (external link)`}
+                href={external_link}
+              >
                 <ExternalLink width={18} height={18} />
               </a>
             )}
             {internal_link && (
-              <button onClick={() => internal_link()}>
+              <button type="button" aria-label={`Read more about ${title}`} onClick={() => internal_link()}>
                 <BookOpenText width={18} height={18} />
               </button>
             )}
