@@ -21,6 +21,8 @@ const csp = [
   "frame-ancestors 'none'",
 ].join('; ');
 
+const isDev = process.env.NODE_ENV === 'development';
+
 const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -36,7 +38,9 @@ const nextConfig: NextConfig = {
           { key: 'X-Frame-Options', value: 'DENY' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=()' },
           { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
-          { key: 'Content-Security-Policy-Report-Only', value: csp },
+          // Dev tooling (Turbopack / React Fast Refresh) uses eval, which would spam
+          // report-only violations in the console — so only send the CSP in production.
+          ...(isDev ? [] : [{ key: 'Content-Security-Policy-Report-Only', value: csp }]),
         ],
       },
     ];

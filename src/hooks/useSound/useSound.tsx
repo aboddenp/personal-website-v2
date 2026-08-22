@@ -9,8 +9,14 @@ function useSound(src: string | string[], throttleAmount: number = 1000) {
   const srcKey = Array.isArray(src) ? src.join('|') : src;
 
   function play() {
-    if (HowlRef.current && !HowlRef.current.playing()) {
-      HowlRef.current?.play();
+    const howl = HowlRef.current;
+    if (!howl) return;
+    // with preload: false, play() only queues until load() is called explicitly
+    if (howl.state() === 'unloaded') {
+      howl.load();
+    }
+    if (!howl.playing()) {
+      howl.play();
     }
   }
 
