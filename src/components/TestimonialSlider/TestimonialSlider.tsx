@@ -4,48 +4,37 @@ import useEmblaCarousel from 'embla-carousel-react';
 import styles from './testimonialSlider.module.css';
 import useMousePosition from '@/hooks/useMousePosition';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useMotionValueEvent } from 'motion/react';
+import { motion, useMotionValue, useMotionValueEvent } from 'motion/react';
 
 function TestimonialSlider({ children }: { children: React.ReactNode }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'start', loop: true }, []);
   const { x, y } = useMousePosition();
   const wrapper = React.useRef<HTMLDivElement>(null);
+  // Bounds are viewport-relative (like clientX/Y) so the cache must be refreshed on scroll/resize
+  const bounds = React.useRef<DOMRect | null>(null);
 
-  // Local state for values we need to re-render on change
-  const [cursorState, setCursorState] = React.useState({
-    x: -1,
-    y: -1,
-    within: false,
-    next: false,
-  });
+  // Motion values move the cursor via transforms outside React — no re-render per mouse move
+  const cursorX = useMotionValue(-1);
+  const cursorY = useMotionValue(-1);
 
-  useMotionValueEvent(x, 'change', (latestX) => {
-    const latestY = y.get();
-    const bounds = wrapper.current?.getBoundingClientRect() ?? { left: 0, right: 0, top: 0, bottom: 0 };
-    const wrapperWidth = wrapper.current?.clientWidth ?? 0;
-    const withinX = latestX <= bounds.right && latestX >= bounds.left;
-    const withinY = latestY <= bounds.bottom && latestY >= bounds.top;
-    setCursorState({
-      x: latestX,
-      y: latestY,
-      within: withinX && withinY,
-      next: latestX >= bounds.right - wrapperWidth / 2,
-    });
-  });
+  // State only for the booleans that change what is rendered
+  const [cursorState, setCursorState] = React.useState({ within: false, next: false });
 
-  useMotionValueEvent(y, 'change', (latestY) => {
+  const updateCursor = React.useCallback(() => {
+    if (!bounds.current) bounds.current = wrapper.current?.getBoundingClientRect() ?? null;
+    const rect = bounds.current;
+    if (!rect) return;
     const latestX = x.get();
-    const bounds = wrapper.current?.getBoundingClientRect() ?? { left: 0, right: 0, top: 0, bottom: 0 };
-    const wrapperWidth = wrapper.current?.clientWidth ?? 0;
-    const withinX = latestX <= bounds.right && latestX >= bounds.left;
-    const withinY = latestY <= bounds.bottom && latestY >= bounds.top;
-    setCursorState({
-      x: latestX,
-      y: latestY,
-      within: withinX && withinY,
-      next: latestX >= bounds.right - wrapperWidth / 2,
-    });
-  });
+    const latestY = y.get();
+    cursorX.set(latestX);
+    cursorY.set(latestY);
+    const within = latestX <= rect.right && latestX >= rect.left && latestY <= rect.bottom && latestY >= rect.top;
+    const next = latestX >= rect.right - rect.width / 2;
+    setCursorState((prev) => (prev.within === within && prev.next === next ? prev : { within, next }));
+  }, [x, y, cursorX, cursorY]);
+
+  useMotionValueEvent(x, 'change', updateCursor);
+  useMotionValueEvent(y, 'change', updateCursor);
 
   const scrollPrev = React.useCallback(() => {
     emblaApi?.scrollPrev();
@@ -55,25 +44,20 @@ function TestimonialSlider({ children }: { children: React.ReactNode }) {
     emblaApi?.scrollNext();
   }, [emblaApi]);
 
-  // Re-check bounds on scroll (without needing mouse to move)
+  // Re-check bounds on scroll/resize (without needing mouse to move)
   React.useEffect(() => {
-    function handleScroll() {
-      const latestX = x.get();
-      const latestY = y.get();
-      const bounds = wrapper.current?.getBoundingClientRect() ?? { left: 0, right: 0, top: 0, bottom: 0 };
-      const wrapperWidth = wrapper.current?.clientWidth ?? 0;
-      const withinX = latestX <= bounds.right && latestX >= bounds.left;
-      const withinY = latestY <= bounds.bottom && latestY >= bounds.top;
-      setCursorState((prev) => ({
-        ...prev,
-        within: withinX && withinY,
-        next: latestX >= bounds.right - wrapperWidth / 2,
-      }));
+    function refresh() {
+      bounds.current = wrapper.current?.getBoundingClientRect() ?? null;
+      updateCursor();
     }
 
-    window.addEventListener('scroll', handleScroll, { capture: true });
-    return () => window.removeEventListener('scroll', handleScroll, { capture: true });
-  }, [x, y]);
+    window.addEventListener('scroll', refresh, { capture: true });
+    window.addEventListener('resize', refresh);
+    return () => {
+      window.removeEventListener('scroll', refresh, { capture: true });
+      window.removeEventListener('resize', refresh);
+    };
+  }, [updateCursor]);
 
   return (
     <>
@@ -84,17 +68,20 @@ function TestimonialSlider({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </div>
-      <button
+      <motion.button
+        type="button"
+        aria-label={cursorState.next ? 'Next testimonial' : 'Previous testimonial'}
         style={{
-          top: cursorState.y,
-          left: cursorState.x,
+          x: cursorX,
+          y: cursorY,
           display: cursorState.within ? 'grid' : 'none',
         }}
+        transformTemplate={(_, generated) => `${generated} translate(-50%, -50%)`}
         className={styles.customCursor}
         onClick={() => (cursorState.next ? scrollNext() : scrollPrev())}
       >
         {cursorState.next ? <ChevronRight /> : <ChevronLeft />}
-      </button>
+      </motion.button>
     </>
   );
 }
